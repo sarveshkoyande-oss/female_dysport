@@ -882,9 +882,9 @@ export default function App() {
               <motion.h1 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-white text-3xl font-bold tracking-tighter flex items-center gap-2"
+                className="text-white text-xl sm:text-3xl font-bold tracking-tighter flex items-center gap-2"
               >
-                <span className="w-2 h-8 bg-blue-500 rounded-full" />
+                <span className="w-1.5 h-6 sm:w-2 sm:h-8 bg-blue-500 rounded-full" />
                 IPSEN DYSPORT MIGRAINE RELIEF SIMULATOR
               </motion.h1>
             </div>
@@ -892,7 +892,7 @@ export default function App() {
         </div>
       </div>
 
-      <div className="absolute top-1/2 left-8 -translate-y-1/2 flex gap-8 z-40 pointer-events-none items-start">
+      <div className="absolute top-1/2 left-4 sm:left-8 -translate-y-1/2 flex gap-4 sm:gap-8 z-40 pointer-events-none items-start scale-75 sm:scale-100 origin-left">
         {/* Migraine Bar */}
         <div className="flex flex-col items-center gap-4">
           <span className="text-xs font-mono text-rose-400">{Math.round(migraineLevel)}%</span>
@@ -928,7 +928,7 @@ export default function App() {
         </div>
       </div>
 
-      <header className="absolute top-24 left-32 w-full p-6 flex justify-start items-start z-30 pointer-events-none">
+      <header className="absolute top-20 sm:top-24 left-4 sm:left-32 w-[calc(100%-2rem)] sm:w-auto p-4 sm:p-6 flex justify-start items-start z-30 pointer-events-none">
         <div className="flex gap-3 pointer-events-auto">
           <AnimatePresence>
             {showUI && (
@@ -1033,7 +1033,7 @@ export default function App() {
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            className="absolute top-48 left-32 w-72 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-3xl z-20 flex flex-col max-h-[50vh]"
+            className="absolute top-40 sm:top-48 left-4 sm:left-32 w-[calc(100%-2rem)] sm:w-72 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-3xl z-20 flex flex-col max-h-[40vh] sm:max-h-[50vh]"
           >
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-white font-bold text-sm tracking-widest uppercase">Coordinates</h3>
@@ -1282,7 +1282,7 @@ export default function App() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
-          className="absolute top-24 right-6 w-64 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-5 shadow-3xl z-20 flex flex-col"
+          className="absolute top-20 sm:top-24 right-4 sm:right-6 w-[calc(100%-2rem)] sm:w-64 bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl p-5 shadow-3xl z-20 flex flex-col max-h-[30vh] sm:max-h-none overflow-y-auto sm:overflow-visible"
         >
           <h3 className="text-white font-bold text-sm tracking-widest uppercase mb-4">Injection Sites</h3>
           <div className="space-y-4">
@@ -1306,7 +1306,7 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute bottom-6 right-8 z-50 flex gap-3 pointer-events-auto">
+      <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-8 z-50 flex gap-3 pointer-events-auto">
         <div className="flex gap-2 bg-slate-900/80 backdrop-blur-md p-2 border border-slate-800 rounded-xl shadow-xl">
           <button onClick={rotateLeft} className="p-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all">
             <RotateCcw size={18} />
@@ -1317,7 +1317,7 @@ export default function App() {
         </div>
       </div>
 
-      <div className="absolute bottom-6 left-8 z-50 flex gap-3 pointer-events-auto items-center">
+      <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-8 z-50 flex gap-3 pointer-events-auto items-center">
         <button 
           onClick={() => setShowUI(!showUI)}
           className={`p-3 backdrop-blur-md border rounded-xl transition-all shadow-xl flex items-center justify-center ${showUI ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-900/80 border-slate-800 text-slate-500 hover:text-slate-300'}`}
