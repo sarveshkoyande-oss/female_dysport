@@ -1,4 +1,4 @@
-import { useState, useRef, Suspense, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, Suspense, useEffect, useCallback, useMemo, memo } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, ContactShadows, Preload } from '@react-three/drei';
 import { motion, AnimatePresence } from 'motion/react';
@@ -12,10 +12,10 @@ const MODEL_URL = '/female_head.obj';
 // Pre-defined sites removed to allow custom marking
 const INITIAL_SITES: any[] = [];
 
-function Wave({ position, normal, angle, delay, color, isMarkingMode }: { position: [number, number, number], normal: [number, number, number], angle: number, delay: number, color: string, isMarkingMode: boolean }) {
+const Wave = memo(function Wave({ position, normal, angle, delay, color, isMarkingMode }: { position: [number, number, number], normal: [number, number, number], angle: number, delay: number, color: string, isMarkingMode: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const maxScale = 1.8; 
-  const duration = 2.4; // Speed reduced by half (duration doubled)
+  const duration = 2.4; 
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
@@ -25,7 +25,7 @@ function Wave({ position, normal, angle, delay, color, isMarkingMode }: { positi
     const scale = progress * maxScale;
     meshRef.current.scale.setScalar(scale);
     
-    if (meshRef.current.material instanceof THREE.MeshStandardMaterial) {
+    if (meshRef.current.material instanceof THREE.MeshBasicMaterial) {
       meshRef.current.material.opacity = (1 - progress) * 0.3;
     }
   });
@@ -44,19 +44,17 @@ function Wave({ position, normal, angle, delay, color, isMarkingMode }: { positi
       quaternion={quaternion}
       raycast={isMarkingMode ? () => null : undefined}
     >
-      <sphereGeometry args={[1, 32, 32, 0, Math.PI * 2, 0, angle]} />
-      <meshStandardMaterial 
+      <sphereGeometry args={[1, 16, 16, 0, Math.PI * 2, 0, angle]} />
+      <meshBasicMaterial 
         color={color} 
         transparent 
         depthWrite={false}
         depthTest={false}
         side={THREE.DoubleSide}
-        emissive={color}
-        emissiveIntensity={0.6}
       />
     </mesh>
   );
-}
+});
 
 function PointWaves({ position, normal, angle, color, isMarkingMode }: { position: [number, number, number], normal: [number, number, number], angle: number, color: string, isMarkingMode: boolean }) {
   const waveCount = 3; // Frequency reduced by half
@@ -74,7 +72,7 @@ function PointWaves({ position, normal, angle, color, isMarkingMode }: { positio
   );
 }
 
-function Marker({ 
+const Marker = memo(function Marker({ 
   position, 
   normal = [0, 0, 1],
   angle = Math.PI,
@@ -103,7 +101,7 @@ function Marker({
         position={position}
         raycast={isMarkingMode ? () => null : undefined}
       >
-        <sphereGeometry args={[isCustom ? 0.06 : 0.08, 16, 16]} />
+        <sphereGeometry args={[isCustom ? 0.06 : 0.08, 12, 12]} />
         <meshStandardMaterial 
           color={isSelected ? '#ffffff' : (isCustom ? '#f43f5e' : color)} 
           emissive={isSelected ? '#ffffff' : (isCustom ? '#f43f5e' : color)} 
@@ -137,7 +135,7 @@ function Marker({
       {showWaves && <PointWaves position={position} normal={normal} angle={angle} color={isCustom ? '#f43f5e' : color} isMarkingMode={isMarkingMode} />}
     </group>
   );
-}
+});
 
 function BustModel({ 
   rotation, 
@@ -868,10 +866,13 @@ export default function App() {
         onAnimationComplete={() => { if (activeInjection) completeInjection(); }}
       >
         <motion.div
-          className="absolute w-[150vw] h-[150vh]"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(34,197,94,0.45) 0%, rgba(34,197,94,0.15) 35%, rgba(34,197,94,0) 60%)' }}
+          className="absolute w-full h-full"
+          style={{ 
+            background: 'radial-gradient(circle at center, rgba(34,197,94,0.4) 0%, rgba(34,197,94,0) 70%)',
+            filter: 'blur(40px)'
+          }}
           initial={{ scale: 0.8 }}
-          animate={activeInjection ? { scale: 1.2 } : { scale: 0.8 }}
+          animate={activeInjection ? { scale: 1.5 } : { scale: 0.8 }}
           transition={activeInjection ? { duration: 2, ease: "easeOut" } : { duration: 0 }}
         />
       </motion.div>
