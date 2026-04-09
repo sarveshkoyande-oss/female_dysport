@@ -56,9 +56,9 @@ const Wave = memo(function Wave({ position, normal, angle, delay, color, isMarki
   );
 });
 
-function PointWaves({ position, normal, angle, color, isMarkingMode }: { position: [number, number, number], normal: [number, number, number], angle: number, color: string, isMarkingMode: boolean }) {
-  const waveCount = 3; // Frequency reduced by half
-  const duration = 2.4; // Speed reduced by half
+const PointWaves = memo(function PointWaves({ position, normal, angle, color, isMarkingMode }: { position: [number, number, number], normal: [number, number, number], angle: number, color: string, isMarkingMode: boolean }) {
+  const waveCount = 3; 
+  const duration = 2.4; 
   const waves = useMemo(() => 
     Array.from({ length: waveCount }).map((_, i) => i * (duration / waveCount)),
   [waveCount, duration]);
@@ -70,7 +70,7 @@ function PointWaves({ position, normal, angle, color, isMarkingMode }: { positio
       ))}
     </group>
   );
-}
+});
 
 const Marker = memo(function Marker({ 
   position, 
@@ -862,18 +862,15 @@ export default function App() {
         className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden"
         initial={{ opacity: 0 }}
         animate={activeInjection ? { opacity: [0, 1, 1, 0] } : { opacity: 0 }}
-        transition={activeInjection ? { duration: 2, times: [0, 0.2, 0.8, 1], ease: "easeInOut" } : { duration: 0 }}
+        transition={activeInjection ? { duration: 1.3, times: [0, 0.15, 0.45, 1], ease: "easeInOut" } : { duration: 0 }}
         onAnimationComplete={() => { if (activeInjection) completeInjection(); }}
       >
         <motion.div
-          className="absolute w-full h-full"
-          style={{ 
-            background: 'radial-gradient(circle at center, rgba(34,197,94,0.4) 0%, rgba(34,197,94,0) 70%)',
-            filter: 'blur(40px)'
-          }}
+          className="absolute w-[150vw] h-[150vh]"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(34,197,94,0.45) 0%, rgba(34,197,94,0.15) 35%, rgba(34,197,94,0) 60%)' }}
           initial={{ scale: 0.8 }}
-          animate={activeInjection ? { scale: 1.5 } : { scale: 0.8 }}
-          transition={activeInjection ? { duration: 2, ease: "easeOut" } : { duration: 0 }}
+          animate={activeInjection ? { scale: 1.2 } : { scale: 0.8 }}
+          transition={activeInjection ? { duration: 1.3, ease: "easeOut" } : { duration: 0 }}
         />
       </motion.div>
 
