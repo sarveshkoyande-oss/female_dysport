@@ -17,6 +17,8 @@ const Wave = memo(function Wave({ position, normal, angle, delay, color, isMarki
   const maxScale = 1.8; 
   const duration = 2.4; 
 
+  const geometry = useMemo(() => new THREE.SphereGeometry(1, 16, 16, 0, Math.PI * 2, 0, angle), [angle]);
+
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
     const t = (clock.getElapsedTime() + delay) % duration;
@@ -42,9 +44,9 @@ const Wave = memo(function Wave({ position, normal, angle, delay, color, isMarki
       position={position} 
       ref={meshRef} 
       quaternion={quaternion}
+      geometry={geometry}
       raycast={isMarkingMode ? () => null : undefined}
     >
-      <sphereGeometry args={[1, 16, 16, 0, Math.PI * 2, 0, angle]} />
       <meshBasicMaterial 
         color={color} 
         transparent 
@@ -94,21 +96,21 @@ const Marker = memo(function Marker({
   showVectors?: boolean
 }) {
   const normalVec = useMemo(() => new THREE.Vector3(...normal).normalize(), [normal]);
+  const markerGeometry = useMemo(() => new THREE.SphereGeometry(isCustom ? 0.06 : 0.08, 12, 12), [isCustom]);
   
   return (
     <group>
       <mesh 
         position={position}
+        geometry={markerGeometry}
         raycast={isMarkingMode ? () => null : undefined}
       >
-        <sphereGeometry args={[isCustom ? 0.06 : 0.08, 12, 12]} />
         <meshStandardMaterial 
           color={isSelected ? '#ffffff' : (isCustom ? '#f43f5e' : color)} 
           emissive={isSelected ? '#ffffff' : (isCustom ? '#f43f5e' : color)} 
           emissiveIntensity={isSelected ? 5 : (isCustom ? 3 : 2)} 
           toneMapped={false}
         />
-        <pointLight distance={0.5} intensity={0.5} color={isCustom ? '#f43f5e' : color} />
       </mesh>
 
       {/* Normal Helper Line */}
@@ -248,12 +250,11 @@ function BustModel({
       {/* Initial sites removed to allow custom marking */}
 
       {customPoints.map((p, idx) => {
+        if (p.injected) return null;
         return (
           <group 
             key={`custom-group-${idx}`} 
-            visible={!p.injected}
             onClick={(e) => { 
-              if (p.injected) return;
               e.stopPropagation(); 
               if (isMarkingMode) {
                 onSelectPoint(idx); 
