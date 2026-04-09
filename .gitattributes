@@ -1,0 +1,2 @@
+*.glb -text -filter -merge -diff
+public/stylized_anime_female_head.glb -text -filter -merge -diff

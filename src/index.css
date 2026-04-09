@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer base {
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 bg-blue-500 rounded-full border-2 border-slate-900 cursor-pointer shadow-lg hover:scale-110 transition-transform;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    @apply w-4 h-4 bg-blue-500 rounded-full border-2 border-slate-900 cursor-pointer shadow-lg hover:scale-110 transition-transform;
+  }
+}
+
+body {
+  @apply bg-slate-950;
+  margin: 0;
+  overflow: hidden;
+}
