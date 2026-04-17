@@ -938,7 +938,7 @@ export default function App() {
       <div className="absolute top-1/2 left-4 sm:left-8 -translate-y-1/2 flex gap-4 sm:gap-8 z-40 pointer-events-none items-start scale-75 sm:scale-100 origin-left">
         {/* Migraine Bar */}
         <div className="flex flex-col items-center gap-4">
-          <span className="text-xs font-mono text-rose-400">{Math.round(migraineLevel)}%</span>
+          <span className="text-xs font-mono text-rose-400 w-8 text-center inline-block tabular-nums">{Math.round(migraineLevel)}%</span>
           <div className="w-4 h-64 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative shadow-xl">
             <motion.div 
               className="absolute bottom-0 w-full shadow-[0_0_10px_rgba(0,0,0,0.5)]"
@@ -955,7 +955,7 @@ export default function App() {
 
         {/* Relief Bar */}
         <div className="flex flex-col items-center gap-4">
-          <span className="text-xs font-mono text-green-400">{Math.round(reliefLevel)}%</span>
+          <span className="text-xs font-mono text-green-400 w-8 text-center inline-block tabular-nums">{Math.round(reliefLevel)}%</span>
           <div className="w-4 h-64 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative shadow-xl">
             <motion.div 
               className="absolute bottom-0 w-full shadow-[0_0_10px_rgba(34,197,94,0.5)]"
