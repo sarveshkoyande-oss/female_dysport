@@ -928,7 +928,7 @@ export default function App() {
                 className="text-white text-xl sm:text-3xl font-bold tracking-tighter flex items-center gap-2"
               >
                 <span className="w-1.5 h-6 sm:w-2 sm:h-8 bg-blue-500 rounded-full" />
-                IPSEN DYSPORT MIGRAINE RELIEF SIMULATOR
+                INJECTION SIMULATOR
               </motion.h1>
             </div>
           </div>
